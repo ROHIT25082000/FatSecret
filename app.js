@@ -45,6 +45,15 @@ const ItemController = (function(){
  *   fatSecret app. 
  */
 const UserInterfaceController = (function(){        
+    
+    const UISelector = {
+        itemList: '#item-list',
+        addBtn: '.add-btn',
+        itemNameInput: '#item-name',
+        itemCaloriesInput: '#item-calories'
+    }
+
+    
     return {
         populateItemList: function(foodItems) {
             let htmlElements = '';
@@ -55,7 +64,16 @@ const UserInterfaceController = (function(){
                 <i class="edit-item fa fa-pencil"></i>
                 </a></li>`;
             });
-            document.querySelector('#item-list').innerHTML = htmlElements;
+            document.querySelector(UISelector.itemList).innerHTML = htmlElements;
+        },
+        getSelectors: function() {
+            return UISelector;
+        },
+        getItemInput : function() {
+            return {
+                name: document.querySelector(UISelector.itemNameInput).value,  
+                calories: document.querySelector(UISelector.itemCaloriesInput).value
+            }
         }
     }
 
@@ -71,22 +89,31 @@ const UserInterfaceController = (function(){
 
 const ApplicationController = (function(ItemController, UserInterfaceController){
 
+    const loadEventListener = function() {
+        const UISelectorList = UserInterfaceController.getSelectors();
+        document.querySelector(UISelectorList.addBtn).addEventListener('click', addFoodItem); 
+    }
+    function addFoodItem(e) {
+        const inputFields = UserInterfaceController.getItemInput();
+        if(inputFields.name != '' && inputFields.calories != '') {
+            
+        }else {
+            alert('Enter values ');
+        }
+        e.preventDefault();
+    }
+    
     return {
         init: function() {
-            
             console.log("Launching Application ...");
-            
-            
-
             const foodItems = ItemController.getData();   
-            
             console.log(foodItems);
-
             // fill the list with items 
             UserInterfaceController.populateItemList(foodItems);
-
+            loadEventListener();
         }
     }
 })(ItemController, UserInterfaceController);  
 
 ApplicationController.init();
+
