@@ -98,9 +98,13 @@ const UserInterfaceController = (function(){
             return UISelector;
         },
         getItemInput : function() {
+            name_ = document.querySelector(UISelector.itemNameInput).value;
+            calories_ = document.querySelector(UISelector.itemCaloriesInput).value;
+            document.querySelector(UISelector.itemNameInput).value = '';
+            document.querySelector(UISelector.itemCaloriesInput).value = '';    
             return {
-                name: document.querySelector(UISelector.itemNameInput).value,  
-                calories: document.querySelector(UISelector.itemCaloriesInput).value
+                name: name_,
+                calories: calories_
             }
         }, 
     }
